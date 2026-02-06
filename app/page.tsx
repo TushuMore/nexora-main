@@ -1,65 +1,130 @@
-import Image from "next/image";
+import Hero from "@/components/Hero";
+import LightRays from "@/components/LightRays";
+import LogoLoop from "@/components/LogoLoop";
+import StatResults from "@/components/StatResults";
+import CircularText from "../components/CircularText";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+} from "react-icons/si";
+import VisionTargets from "@/components/VisionTargets";
+import Services from "@/components/Services";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import ProcessOfWork from "@/components/ProcessOfWork";
+import Testimonials from "@/components/Testimonials";
+import CTASection from "@/components/CTASection";
+import ProjectsSection from "@/components/ProjectSection";
+
+const techLogos = [
+  { node: <SiReact />, title: "React", href: "https://react.dev" },
+  { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+  {
+    node: <SiTypescript />,
+    title: "TypeScript",
+    href: "https://www.typescriptlang.org",
+  },
+  {
+    node: <SiTailwindcss />,
+    title: "Tailwind CSS",
+    href: "https://tailwindcss.com",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <section className="relative min-h-screen overflow-hidden">
+      {/* BACKGROUND LIGHT */}
+      {/* <div className="pointer-events-none absolute inset-0 z-0">
+        <LightRays
+          raysOrigin="top-left"
+          raysColor="#ff00ae"
+          raysSpeed={0.1}
+          lightSpread={2}
+          rayLength={5}
+          followMouse={false}
+          mouseInfluence={0}
+          noiseAmount={0}
+          distortion={0}
+          pulsating={false}
+          fadeDistance={0.4}
+          saturation={0.8}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      </div> */}
+
+      <button
+        className="
+    fixed
+    bottom-10 right-10
+    z-50
+  "
+      >
+        <CircularText
+          text="CREATE*NOW*WITH*NEXORA*"
+          onHover="speedUp"
+          spinDuration={20}
+          className="custom-class hidden sm:block"
+        />
+      </button>
+
+      {/* CONTENT */}
+      <div className="relative z-10">
+        <Hero />
+        {/* yaha baaki components freely add karo */}
+
+        {/* <WorkedWith/> */}
+
+        <div
+          style={{
+            height: "200px",
+            position: "relative",
+            overflow: "hidden",
+            color: "#ffffff",
+          }}
+          className="mt-20 w-7xl mx-auto"
+        >
+          {/* Basic horizontal loop */}
+          <LogoLoop
+            logos={techLogos}
+            speed={100}
+            direction="left"
+            logoHeight={60}
+            gap={60}
+            hoverSpeed={0}
+            scaleOnHover
+            fadeOut
+            fadeOutColor="#020617"
+            ariaLabel="Technology partners"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Results  */}
+        {/* <StatResults /> */}
+
+        {/* Projects  */}
+        <ProjectsSection/>
+
+        {/* Service  */}
+        <Services/>
+
+        {/* Vision Target  */}
+        {/* <VisionTargets/> */}
+
+        {/* Why choose us  */}
+        <WhyChooseUs/>
+
+        {/* Procces of work  */}
+        <ProcessOfWork/>
+
+          {/* Testimonials  */}
+          <Testimonials/>
+
+          {/* CTA  */}
+          <CTASection/>
+
+        {/* Above this all components should attatched  */}
+      </div>
+    </section>
   );
 }

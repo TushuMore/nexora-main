@@ -1,6 +1,24 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+// import { Bitcount } from "next/font/google";
+import { Pacifico } from "next/font/google";
+import Footer from "@/components/Footer";
+import SmoothScrollProvider from "./providers";
+import { Toaster } from "sonner";
+import Providers from "./SessionProvider";
+
+// export const bitcount = Bitcount({
+//   subsets: ["latin"],
+//   weight: ["500"], // heavy weights
+// });
+
+export const pacifico = Pacifico({
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +43,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-950`}
       >
-        {children}
+        <Providers>
+        <Navbar/>
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <Toaster richColors position="top-center" />
+        <Footer/>
+        </Providers>
       </body>
     </html>
   );
