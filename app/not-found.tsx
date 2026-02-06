@@ -8,7 +8,7 @@ export default function NotFound() {
   hoverIntensity={0.5}
   enableHover
 >
-  Page Not Found
+  Page is not found
 </FuzzyText>
     </div>
   );
