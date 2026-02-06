@@ -17,20 +17,19 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await fetch("/api/projects"); // public projects API
-        const data = await res.json();
+  fetch("/api/projects")
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
         setProjects(data);
-      } catch (err) {
-        console.error("Failed to fetch projects", err);
-      } finally {
-        setLoading(false);
+      } else {
+        setProjects([]);
       }
-    };
+    })
+    .catch(() => setProjects([]))
+    .finally(() => setLoading(false));
+}, []);
 
-    fetchProjects();
-  }, []);
 
   return (
     <section className="relative bg-gray-950 py-40 overflow-hidden">

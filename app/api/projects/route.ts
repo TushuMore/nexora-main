@@ -1,21 +1,14 @@
-import { connectDB } from "@/lib/mongodb";
-import Project from "@/models/Project";
 import { NextResponse } from "next/server";
+import Project from "@/models/Project";
+import { connectDB } from "@/lib/mongodb";
 
 export async function GET() {
   try {
     await connectDB();
-
-    const projects = await Project.find({
-      status: "published",
-    }).sort({ createdAt: -1 });
-
+    const projects = await Project.find({ status: "published" });
     return NextResponse.json(projects);
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Failed to fetch projects" },
-      { status: 500 }
-    );
+    console.error("Projects API error:", error);
+    return NextResponse.json([], { status: 500 });
   }
 }

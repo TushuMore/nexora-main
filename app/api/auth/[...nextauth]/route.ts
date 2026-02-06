@@ -4,12 +4,17 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 
+/* ================= TYPES ================= */
+
 declare module "next-auth" {
   interface User {
     role?: string;
   }
+
   interface Session {
-    user: User & {
+    user: {
+      name?: string | null;
+      email?: string | null;
       role?: string;
     };
   }
@@ -21,6 +26,7 @@ declare module "next-auth/jwt" {
   }
 }
 
+/* ================= AUTH OPTIONS ================= */
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -58,7 +64,7 @@ export const authOptions: NextAuthOptions = {
           id: user._id.toString(),
           name: user.name,
           email: user.email,
-          role: user.role, // ✅ TS now understands this
+          role: user.role,
         };
       },
     }),
@@ -90,6 +96,8 @@ export const authOptions: NextAuthOptions = {
 
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+/* ================= HANDLER ================= */
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
