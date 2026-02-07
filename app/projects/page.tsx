@@ -17,31 +17,27 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  fetch("/api/projects")
-    .then((res) => res.json())
-    .then((data) => {
-      if (Array.isArray(data)) {
-        setProjects(data);
-      } else {
-        setProjects([]);
-      }
-    })
-    .catch(() => setProjects([]))
-    .finally(() => setLoading(false));
-}, []);
-
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setProjects(data);
+        else setProjects([]);
+      })
+      .catch(() => setProjects([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
-    <section className="relative bg-gray-950 py-40 overflow-hidden h-screen">
-      {/* LEFT VERTICAL BACKGROUND TEXT */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 pt-20">
-        <h2 className="text-[20rem] font-extrabold text-white/5 rotate-[-90deg] tracking-tight select-none">
+    <section className="relative bg-gray-950 pt-44 pb-40">
+      {/* LEFT BACKGROUND TEXT */}
+      <div className="absolute left-[-6rem] top-1/2 -translate-y-1/2 hidden lg:block pointer-events-none">
+        <h2 className="text-[18rem] font-extrabold text-white/5 rotate-[-90deg] tracking-tight">
           WORK
         </h2>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-20 grid lg:grid-cols-12 gap-16">
-        {/* LEFT – Sticky Title */}
+        {/* LEFT – STICKY CONTENT */}
         <div className="lg:col-span-4">
           <div className="sticky top-32">
             <span className="text-sm tracking-[0.3em] uppercase text-gray-500">
@@ -50,9 +46,9 @@ export default function ProjectsPage() {
 
             <h1 className="mt-6 text-5xl md:text-6xl font-bold text-white leading-tight">
               Crafted <br />
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-fuchsia-500">
-              digital <br /> experiences
-            </span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-fuchsia-500">
+                digital <br /> experiences
+              </span>
             </h1>
 
             <p className="mt-6 text-gray-400 text-lg max-w-sm">
@@ -62,7 +58,7 @@ export default function ProjectsPage() {
           </div>
         </div>
 
-        {/* RIGHT – Projects */}
+        {/* RIGHT – PROJECTS */}
         <div className="lg:col-span-8 grid sm:grid-cols-2 gap-14">
           {loading && (
             <p className="text-gray-400 col-span-2 text-center">
