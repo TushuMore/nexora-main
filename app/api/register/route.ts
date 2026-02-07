@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+
+
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
@@ -19,7 +22,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "User already exists" }, { status: 400 });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = password;
+
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
       name,
