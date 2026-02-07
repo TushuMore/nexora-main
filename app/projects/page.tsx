@@ -32,9 +32,9 @@ export default function ProjectsPage() {
 
 
   return (
-    <section className="relative bg-gray-950 py-40 overflow-hidden">
+    <section className="relative bg-gray-950 py-40 overflow-hidden h-screen">
       {/* LEFT VERTICAL BACKGROUND TEXT */}
-      <div className="absolute left-6 top-1/2 -translate-y-1/2">
+      <div className="absolute left-6 top-1/2 -translate-y-1/2 pt-20">
         <h2 className="text-[20rem] font-extrabold text-white/5 rotate-[-90deg] tracking-tight select-none">
           WORK
         </h2>
