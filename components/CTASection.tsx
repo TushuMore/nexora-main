@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import HeadingButton from "./HeadingButton";
 import FreeCallModal from "./FreeCallModal";
+import Link from "next/link";
 
 
 const CTASection = () => {
@@ -39,9 +40,9 @@ const CTASection = () => {
 
         {/* Buttons */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
-          <button className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition">
+          <Link href={'/start-project'} className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition">
             Start Your Project
-          </button>
+          </Link>
 
          {/* CTA Section */}
       <button

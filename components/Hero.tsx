@@ -1,9 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { AnimatedNumber } from "./reusable/AnimateNumber";
 
 export default function Hero() {
+  const [projectCount, setProjectCount] = useState(0);
+useEffect(() => {
+  async function fetchCount() {
+    try {
+      const res = await fetch("/api/admin/stats");
+      const data = await res.json();
+
+      // 🔥 correct field
+      setProjectCount(Number(data?.projects) || 0);
+
+    } catch (error) {
+      console.error("Failed to fetch project count");
+      setProjectCount(0);
+    }
+  }
+
+  fetchCount();
+}, []);
+
+
   return (
     <section className="relative min-h-screen bg-gray-950 overflow-hidden">
       
@@ -43,42 +64,43 @@ export default function Hero() {
             <button className="px-8 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:scale-105 transition">
               Start a Project
             </button>
-            <Link href={'/projects'} className="px-8 py-3 rounded-lg border border-white/20 text-white hover:bg-white/10 transition">
+            <Link
+              href={"/projects"}
+              className="px-8 py-3 rounded-lg border border-white/20 text-white hover:bg-white/10 transition"
+            >
               View Work
             </Link>
           </div>
         </div>
 
-       {/* RIGHT STATS – PREMIUM */}
-<div className="hidden md:flex flex-col gap-14 items-end">
+        {/* RIGHT STATS – PREMIUM */}
+        <div className="hidden md:flex flex-col gap-14 items-end">
 
-  <div className="relative text-right">
-    <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
-    <AnimatedNumber value={120} suffix="+" />
-    <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
-      Projects Done
-    </p>
-  </div>
+          <div className="relative text-right">
+            <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
+            <AnimatedNumber value={projectCount} suffix="+" />
+            <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
+              Projects Done
+            </p>
+          </div>
 
-  <div className="relative text-right">
-    <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
-    <AnimatedNumber value={5} suffix="+" />
-    <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
-      Years Experience
-    </p>
-  </div>
+          <div className="relative text-right">
+            <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
+            <AnimatedNumber value={3} suffix="+" />
+            <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
+              Years Experience
+            </p>
+          </div>
 
-  <div className="relative text-right">
-    <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
-    <AnimatedNumber value={60} suffix="+" />
-    <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
-      Happy Clients
-    </p>
-  </div>
+          <div className="relative text-right">
+            <span className="absolute -right-6 top-2 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent" />
+            <AnimatedNumber value={5} suffix="+" />
+            <p className="mt-2 text-xs uppercase tracking-[0.25em] text-gray-400">
+              Happy Clients
+            </p>
+          </div>
 
-</div>
-
-
+        </div>
       </div>
     </section>
   );

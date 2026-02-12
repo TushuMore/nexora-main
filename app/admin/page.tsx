@@ -9,6 +9,7 @@ import {
   Star,
   Clock,
   PhoneCall,
+  Briefcase,
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -16,7 +17,8 @@ export default function AdminDashboard() {
     users: 0,
     projects: 0,
     contacts: 0,
-    testimonials: 0, // ✅ added
+    testimonials: 0,
+    clientProjects: 0,
   });
 
   const [calls, setCalls] = useState<any[]>([]);
@@ -26,6 +28,7 @@ export default function AdminDashboard() {
     async function fetchStats() {
       const res = await fetch("/api/admin/stats");
       const data = await res.json();
+       console.log("STATS DATA:", data);
       setStats(data);
     }
     fetchStats();
@@ -80,8 +83,15 @@ export default function AdminDashboard() {
       color: "from-blue-500 to-cyan-500",
     },
     {
+      title: "Client Projects",
+      value: stats.clientProjects,
+      icon: Briefcase,
+      href: "/admin/client-projects",
+      color: "from-indigo-500 to-purple-600",
+    },
+    {
       title: "Testimonials",
-      value: stats.testimonials, // ✅ dynamic now
+      value: stats.testimonials,
       icon: Star,
       href: "/admin/testimonials",
       color: "from-yellow-500 to-orange-500",
@@ -108,7 +118,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* STATS GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-6">
         {cards.map((item) => (
           <Link
             key={item.title}
@@ -157,7 +167,6 @@ export default function AdminDashboard() {
               key={call._id}
               className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 rounded-2xl border border-white/10 bg-gray-900 p-6"
             >
-              {/* LEFT INFO */}
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <h3 className="text-lg font-semibold">
@@ -197,7 +206,9 @@ export default function AdminDashboard() {
 
                 <div className="flex items-center gap-2 mt-3 text-gray-400 text-xs">
                   <Clock size={14} />
-                  {new Date(call.createdAt).toLocaleString()}
+                  {new Date(
+                    call.createdAt
+                  ).toLocaleString()}
                 </div>
               </div>
 
