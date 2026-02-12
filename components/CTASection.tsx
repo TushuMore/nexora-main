@@ -1,7 +1,12 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import HeadingButton from "./HeadingButton";
+import FreeCallModal from "./FreeCallModal";
+
 
 const CTASection = () => {
+  const [open, setOpen] = useState(false);
   return (
     <section className="relative overflow-hidden py-32 px-6">
         
@@ -38,9 +43,15 @@ const CTASection = () => {
             Start Your Project
           </button>
 
-          <button className="px-8 py-4 rounded-full border border-white/30 text-white hover:bg-white/10 transition">
-            Book a Free Call
-          </button>
+         {/* CTA Section */}
+      <button
+        onClick={() => setOpen(true)}
+        className="px-8 py-4 rounded-full border border-white/30 text-white"
+      >
+        Book a Free Call
+      </button>
+
+      <FreeCallModal open={open} setOpen={setOpen} />
         </div>
       </div>
     </section>

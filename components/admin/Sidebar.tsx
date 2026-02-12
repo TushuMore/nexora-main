@@ -3,7 +3,7 @@ import Link from "next/link";
 const links = [
   { name: "Dashboard", href: "/admin" },
   { name: "Projects", href: "/admin/projects" },
-  { name: "Blogs", href: "/admin/blogs" },
+  { name: "Testimonials", href: "/admin/testimonials" },
 ];
 
 export default function Sidebar() {
