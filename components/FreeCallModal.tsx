@@ -2,8 +2,13 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const FreeCallModal = ({ open, setOpen }: any) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -22,13 +27,21 @@ const FreeCallModal = ({ open, setOpen }: any) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // ✅ Check if user is logged in
+    if (!session) {
+      toast.error("Please login to book a call!");
+      router.push("/login"); // optional: redirect to login page
+      return;
+    }
+
     setLoading(true);
 
     try {
       const res = await fetch("/api/book-call", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, userEmail: session.user?.email }),
       });
 
       if (!res.ok) throw new Error("Failed");

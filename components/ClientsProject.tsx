@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
+// Options
 const projectTypes = [
   "Business Website",
   "Web Application",
@@ -14,7 +17,10 @@ const projectTypes = [
 const budgets = ["₹10k–25k", "₹25k–50k", "₹50k–1L", "₹1L+"];
 const timelines = ["ASAP", "1 Month", "2-3 Months", "Flexible"];
 
-export default function StartProjectChat() {
+export default function ClientsProject() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const [step, setStep] = useState(0);
   const [name, setName] = useState("");
   const [projectType, setProjectType] = useState("");
@@ -27,12 +33,19 @@ export default function StartProjectChat() {
 
   const nextStep = () => setStep((prev) => prev + 1);
 
+  // ✅ Submit handler with login check
   const handleSubmit = async () => {
+    if (!session) {
+      alert("Please login to submit your project!");
+      router.push("/login"); // optional: redirect to login page
+      return;
+    }
+
     try {
       setLoading(true);
       setError("");
 
-      const res = await fetch("/api/start-project", {
+      const res = await fetch("/api/client-projects", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,6 +56,7 @@ export default function StartProjectChat() {
           budget,
           timeline,
           description,
+          userEmail: session.user?.email, // optional: track user
         }),
       });
 
@@ -62,7 +76,6 @@ export default function StartProjectChat() {
 
   return (
     <div className="h-[calc(100vh-15rem)] w-full flex items-center justify-center relative overflow-hidden px-6 text-white">
-
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/30 blur-[150px] rounded-full" />
@@ -71,20 +84,18 @@ export default function StartProjectChat() {
 
       <div className="w-full max-w-2xl text-center">
         <AnimatePresence mode="wait">
-
+          {/* Step 0: Name */}
           {step === 0 && (
             <MotionWrapper stepKey="step1">
               <h1 className="text-4xl font-bold mb-8">
                 👋 Hey! What's your name?
               </h1>
-
               <input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name..."
                 className="w-full px-6 py-5 text-lg rounded-2xl bg-white/5 border border-white/10 focus:ring-2 focus:ring-indigo-500 outline-none"
               />
-
               <button
                 disabled={!name}
                 onClick={nextStep}
@@ -95,12 +106,12 @@ export default function StartProjectChat() {
             </MotionWrapper>
           )}
 
+          {/* Step 1: Project Type */}
           {step === 1 && (
             <MotionWrapper stepKey="step2">
               <h1 className="text-4xl font-bold mb-8">
                 Nice to meet you, {name}! What are you building?
               </h1>
-
               <div className="grid grid-cols-2 gap-4">
                 {projectTypes.map((type) => (
                   <button
@@ -118,12 +129,10 @@ export default function StartProjectChat() {
             </MotionWrapper>
           )}
 
+          {/* Step 2: Budget */}
           {step === 2 && (
             <MotionWrapper stepKey="step3">
-              <h1 className="text-4xl font-bold mb-8">
-                What's your budget range?
-              </h1>
-
+              <h1 className="text-4xl font-bold mb-8">What's your budget range?</h1>
               <div className="flex flex-wrap justify-center gap-4">
                 {budgets.map((b) => (
                   <button
@@ -141,12 +150,10 @@ export default function StartProjectChat() {
             </MotionWrapper>
           )}
 
+          {/* Step 3: Timeline */}
           {step === 3 && (
             <MotionWrapper stepKey="step4">
-              <h1 className="text-4xl font-bold mb-8">
-                When do you want to launch?
-              </h1>
-
+              <h1 className="text-4xl font-bold mb-8">When do you want to launch?</h1>
               <div className="flex flex-wrap justify-center gap-4">
                 {timelines.map((t) => (
                   <button
@@ -164,12 +171,10 @@ export default function StartProjectChat() {
             </MotionWrapper>
           )}
 
+          {/* Step 4: Description */}
           {step === 4 && (
             <MotionWrapper stepKey="step5">
-              <h1 className="text-4xl font-bold mb-8">
-                Tell us more about your idea
-              </h1>
-
+              <h1 className="text-4xl font-bold mb-8">Tell us more about your idea</h1>
               <textarea
                 rows={4}
                 value={description}
@@ -177,11 +182,7 @@ export default function StartProjectChat() {
                 className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 focus:ring-2 focus:ring-indigo-500 outline-none"
                 placeholder="Describe your project..."
               />
-
-              {error && (
-                <p className="text-red-400 mt-3 text-sm">{error}</p>
-              )}
-
+              {error && <p className="text-red-400 mt-3 text-sm">{error}</p>}
               <button
                 disabled={loading}
                 onClick={handleSubmit}
@@ -192,27 +193,23 @@ export default function StartProjectChat() {
             </MotionWrapper>
           )}
 
+          {/* Step 5: Success */}
           {step === 5 && (
             <MotionWrapper stepKey="final">
-              <h1 className="text-5xl font-bold mb-6">
-                🎉 You're All Set, {name}!
-              </h1>
-
+              <h1 className="text-5xl font-bold mb-6">🎉 You're All Set, {name}!</h1>
               <p className="text-white/70 text-lg">
                 We’ll review your project and contact you within 24 hours.
               </p>
-
               <div className="mt-10 w-40 h-40 mx-auto bg-gradient-to-r from-indigo-500 to-purple-600 blur-3xl opacity-40 rounded-full animate-pulse" />
             </MotionWrapper>
           )}
-
         </AnimatePresence>
       </div>
     </div>
   );
 }
 
-/* Motion Wrapper (Fixed Key Issue) */
+// Motion Wrapper for AnimatePresence
 function MotionWrapper({
   children,
   stepKey,

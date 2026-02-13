@@ -40,7 +40,7 @@ const CTASection = () => {
 
         {/* Buttons */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
-          <Link href={'/start-project'} className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition">
+          <Link href={'/client-project'} className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition">
             Start Your Project
           </Link>
 

@@ -61,9 +61,9 @@ useEffect(() => {
           </p>
 
           <div className="mt-10 flex gap-6">
-            <button className="px-8 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:scale-105 transition">
+            <Link href={'/client-project'} className="px-8 py-3 rounded-lg bg-white text-gray-950 font-semibold hover:scale-105 transition">
               Start a Project
-            </button>
+            </Link>
             <Link
               href={"/projects"}
               className="px-8 py-3 rounded-lg border border-white/20 text-white hover:bg-white/10 transition"
